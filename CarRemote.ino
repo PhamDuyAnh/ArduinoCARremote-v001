@@ -1,11 +1,31 @@
+/*
+* Create: 2017-06-27 by CKD - Pham Duy Anh - phamduyanh@gmail.com
+*
+* Arduino UNO -> L298 module
+* Pin 2       -> IN4
+* Pin 3       -> IN3
+* Pin 4       -> IN1
+* Pin 5       -> IN2
+* Pin 9  ~    -> ENA    PWM for speed control motor A
+* Pin 10 ~    -> ENB    PWM for speed control motor B
+*
+* Use SoftwareSerial for communication to Bluetooth module
+* Arduino UNO -> HC-05 Bluetooth module
+* A4 (Tx)     -> Rx
+* A5 (Rx)     -> Tx
+* 5V          -> Vcc
+* Gnd         -> Gnd
+*/
+
 #define IN1 2
 #define IN2 3
 #define IN3 4
 #define IN4 5
 #define SP1 9
 #define SP2 10
+
 #include <SoftwareSerial.h>
-SoftwareSerial Blueth(A5, A4); // RX, TX
+SoftwareSerial Bluetooth(A5, A4); // RX, TX
 
 char cmd;
 int sp = 70;
@@ -13,7 +33,7 @@ int sp = 70;
 void setup()
 {
   Serial.begin(115200);
-  Blueth.begin(9600);
+  Bluetooth.begin(9600);
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
   pinMode(IN3, OUTPUT);
@@ -25,9 +45,9 @@ void setup()
 
 void loop()
 {
-  if (Blueth.available())
+  if (Bluetooth.available())
   {
-    cmd = Blueth.read();
+    cmd = Bluetooth.read();
     switch (cmd)
     {
       default:
